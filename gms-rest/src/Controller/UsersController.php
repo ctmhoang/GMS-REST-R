@@ -3,32 +3,38 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Model\Entity\User;
+use App\Model\Table\UsersTable;
+use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\Datasource\ResultSetInterface;
+use Cake\Http\Response;
+
 /**
  * Users Controller
  *
- * @property \App\Model\Table\UsersTable $Users
- * @method \App\Model\Entity\User[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @property UsersTable $Users
+ * @method User[]|ResultSetInterface paginate($object = null, array $settings = [])
  */
 class UsersController extends AppController
 {
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|null|void Renders view
+     * @return Response|null|void Renders view
      */
     public function index()
     {
-        $users = $this->paginate($this->Users);
-
+        $users =$this->Users->find();
         $this->set(compact('users'));
+        $this->viewBuilder()->setOption('serialize', true);
     }
 
     /**
      * View method
      *
      * @param string|null $id User id.
-     * @return \Cake\Http\Response|null|void Renders view
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|null|void Renders view
+     * @throws RecordNotFoundException When record not found.
      */
     public function view($id = null)
     {
@@ -37,12 +43,13 @@ class UsersController extends AppController
         ]);
 
         $this->set(compact('user'));
+        $this->viewBuilder()->setOption('serialize', true);
     }
 
     /**
      * Add method
      *
-     * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
+     * @return Response|null|void Redirects on successful add, renders view otherwise.
      */
     public function add()
     {
@@ -69,43 +76,51 @@ class UsersController extends AppController
      * Edit method
      *
      * @param string|null $id User id.
-     * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|null|void Redirects on successful edit, renders view otherwise.
+     * @throws RecordNotFoundException When record not found.
      */
     public function edit($id = null)
     {
+        $res = [];
         $user = $this->Users->get($id, [
             'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
             if ($this->Users->save($user)) {
-                $this->Flash->success(__('The user has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
+                $res = ["status" => 1,
+                    "message" => "The user has been save"];
             }
-            $this->Flash->error(__('The user could not be saved. Please, try again.'));
+           else $res = ["status" => 0,
+               "message" => "The user has not been save. Please try again!"];
         }
-        $this->set(compact('user'));
+        $this->set(compact('res'));
+        $this->viewBuilder()->setOption('serialize', true);
+
     }
 
     /**
      * Delete method
      *
      * @param string|null $id User id.
-     * @return \Cake\Http\Response|null|void Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|null|void Redirects to index.
+     * @throws RecordNotFoundException When record not found.
      */
     public function delete($id = null)
     {
+        $res=[];
         $this->request->allowMethod(['post', 'delete']);
         $user = $this->Users->get($id);
         if ($this->Users->delete($user)) {
-            $this->Flash->success(__('The user has been deleted.'));
+            $res = ["status" => 1,
+                "message" => "The user has been deleted."];
         } else {
-            $this->Flash->error(__('The user could not be deleted. Please, try again.'));
+            $res = ["status" => 1,
+                "message" => 'The user could not be deleted. Please, try again.'];
         }
 
-        return $this->redirect(['action' => 'index']);
+        $this->set($res);
+        $this->viewBuilder()->setOption('serialize', true);
+
     }
 }
