@@ -115,4 +115,10 @@ class PhotosController extends AppController
         $this->viewBuilder()->setOption('serialize', true);
 
     }
+
+    public function search(string $title){
+        $photos = $this->Photos->find('all', ['conditions' => ['Photos.title LIKE' => "%{$title}%"]])->toArray();
+        $this->set($photos);
+        $this->viewBuilder()->setOption("serialize", true);
+    }
 }
