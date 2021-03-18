@@ -58,11 +58,11 @@ class UsersController extends AppController
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
             if ($this->Users->save($user)) {
-                $res = ["status" => 1,
+                $res = ["code" => 200,
                     "message" => "The account has been signed up!"];
             }
             else{
-                $res = ["status" => 0,
+                $res = ["code" => 400,
                     "message" => "The user could not be saved. Please, try again."];
             }
 
@@ -88,10 +88,10 @@ class UsersController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
             if ($this->Users->save($user)) {
-                $res = ["status" => 1,
+                $res = ["code" => 200,
                     "message" => "The user has been save"];
             }
-           else $res = ["status" => 0,
+           else $res = ["code" => 400,
                "message" => "The user has not been save. Please try again!"];
         }
         $this->set(compact('res'));
@@ -112,10 +112,10 @@ class UsersController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $user = $this->Users->get($id);
         if ($this->Users->delete($user)) {
-            $res = ["status" => 1,
+            $res = ["code" => 200,
                 "message" => "The user has been deleted."];
         } else {
-            $res = ["status" => 1,
+            $res = ["code" => 400,
                 "message" => 'The user could not be deleted. Please, try again.'];
         }
 

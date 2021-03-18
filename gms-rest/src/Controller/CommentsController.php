@@ -18,9 +18,11 @@ class CommentsController extends AppController
      */
     public function index()
     {
-        $comments = $this->paginate($this->Comments);
+        $comments = $this->Comments->find();
 
         $this->set(compact('comments'));
+        $this->viewBuilder()->setOption('serialize', true);
+
     }
 
     /**
@@ -37,6 +39,8 @@ class CommentsController extends AppController
         ]);
 
         $this->set(compact('comment'));
+        $this->viewBuilder()->setOption('serialize', true);
+
     }
 
     /**
@@ -57,6 +61,8 @@ class CommentsController extends AppController
             $this->Flash->error(__('The comment could not be saved. Please, try again.'));
         }
         $this->set(compact('comment'));
+        $this->viewBuilder()->setOption('serialize', true);
+
     }
 
     /**
@@ -81,6 +87,8 @@ class CommentsController extends AppController
             $this->Flash->error(__('The comment could not be saved. Please, try again.'));
         }
         $this->set(compact('comment'));
+        $this->viewBuilder()->setOption('serialize', true);
+
     }
 
     /**
@@ -101,5 +109,7 @@ class CommentsController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+        $this->viewBuilder()->setOption('serialize', true);
+
     }
 }

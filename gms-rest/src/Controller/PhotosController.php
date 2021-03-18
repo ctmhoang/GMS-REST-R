@@ -18,9 +18,10 @@ class PhotosController extends AppController
      */
     public function index()
     {
-        $photos = $this->paginate($this->Photos);
+        $photos = $this->Photos->find();
 
         $this->set(compact('photos'));
+        $this->viewBuilder()->setOption('serialize', true);
     }
 
     /**
@@ -37,6 +38,7 @@ class PhotosController extends AppController
         ]);
 
         $this->set(compact('photo'));
+        $this->viewBuilder()->setOption('serialize', true);
     }
 
     /**
@@ -46,17 +48,21 @@ class PhotosController extends AppController
      */
     public function add()
     {
+        $res = [];
         $photo = $this->Photos->newEmptyEntity();
         if ($this->request->is('post')) {
             $photo = $this->Photos->patchEntity($photo, $this->request->getData());
-            if ($this->Photos->save($photo)) {
-                $this->Flash->success(__('The photo has been saved.'));
+            if ($this->Photos->save($photo))
+                $res = ["code" => 200,
+                    "message" => 'The photo has been saved.'];
 
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The photo could not be saved. Please, try again.'));
+            else
+                $res = ["code" => 400,
+                    "message" => 'The photo could not be saved. Please, try again.'];
         }
-        $this->set(compact('photo'));
+        $this->set(compact('res'));
+        $this->viewBuilder()->setOption('serialize', true);
+
     }
 
     /**
@@ -68,19 +74,22 @@ class PhotosController extends AppController
      */
     public function edit($id = null)
     {
+        $res = [];
         $photo = $this->Photos->get($id, [
             'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $photo = $this->Photos->patchEntity($photo, $this->request->getData());
-            if ($this->Photos->save($photo)) {
-                $this->Flash->success(__('The photo has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The photo could not be saved. Please, try again.'));
+            if ($this->Photos->save($photo))
+                $res = ["code" => 200,
+                    "message" => 'The photo has been saved.'];
+            else
+                $res = ["code" => 400,
+                    "message" => 'The photo could not be saved. Please, try again.'];
         }
-        $this->set(compact('photo'));
+        $this->set(compact('res'));
+        $this->viewBuilder()->setOption('serialize', true);
+
     }
 
     /**
@@ -94,12 +103,16 @@ class PhotosController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $photo = $this->Photos->get($id);
-        if ($this->Photos->delete($photo)) {
-            $this->Flash->success(__('The photo has been deleted.'));
-        } else {
-            $this->Flash->error(__('The photo could not be deleted. Please, try again.'));
-        }
+        if ($this->Photos->delete($photo))
+            $res = ["code" => 200,
+                "message" => 'The photo has been deleted.'];
+        else
+            $res = ["code" => 400,
+                "message" => 'The photo could not be deleted. Please, try again.'];
 
-        return $this->redirect(['action' => 'index']);
+
+        $this->set($res);
+        $this->viewBuilder()->setOption('serialize', true);
+
     }
 }
