@@ -1,14 +1,17 @@
 import React from "react";
 import { render } from "react-dom";
-import { Router } from "react-router";
+import { Route, Routes } from "react-router";
+import { BrowserRouter } from "react-router-dom";
 import SearchParams from "./user/SearchParams";
 
 const App = () => {
   return (
     <React.StrictMode>
-      <Router>
-        <SearchParams />
-      </Router>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<SearchParams />} />
+        </Routes>
+      </BrowserRouter>
     </React.StrictMode>
   );
 };
