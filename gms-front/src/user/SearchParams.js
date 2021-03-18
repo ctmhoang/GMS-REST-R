@@ -1,10 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import blog from "../api/Blog";
+import Result from "./Results";
+
 const SearchParams = () => {
   const [query, setQuery] = useState("");
+  const [posts, SetPosts] = useState([]);
   async function requestBlogs() {
-    // TODO: Call API to get blogs
-    return null;
+    const blogs = await blog.search(query);
+    SetPosts(blogs || []);
   }
+
+  useEffect(() => {
+    blog.blogs().then(({ photos }) => SetPosts(photos), console.error);
+  }, []);
   return (
     <div className="row">
       <div className="well">
@@ -30,6 +38,7 @@ const SearchParams = () => {
           </span>
         </form>
       </div>
+      <Result data={posts} />
     </div>
   );
 };
