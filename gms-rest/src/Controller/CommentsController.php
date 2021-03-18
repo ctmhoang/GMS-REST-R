@@ -3,18 +3,24 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Model\Entity\Comment;
+use App\Model\Table\CommentsTable;
+use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\Datasource\ResultSetInterface;
+use Cake\Http\Response;
+
 /**
  * Comments Controller
  *
- * @property \App\Model\Table\CommentsTable $Comments
- * @method \App\Model\Entity\Comment[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @property CommentsTable $Comments
+ * @method Comment[]|ResultSetInterface paginate($object = null, array $settings = [])
  */
 class CommentsController extends AppController
 {
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|null|void Renders view
+     * @return Response|null|void Renders view
      */
     public function index()
     {
@@ -29,8 +35,8 @@ class CommentsController extends AppController
      * View method
      *
      * @param string|null $id Comment id.
-     * @return \Cake\Http\Response|null|void Renders view
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|null|void Renders view
+     * @throws RecordNotFoundException When record not found.
      */
     public function view($id = null)
     {
@@ -46,21 +52,23 @@ class CommentsController extends AppController
     /**
      * Add method
      *
-     * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
+     * @return Response|null|void Redirects on successful add, renders view otherwise.
      */
     public function add()
     {
+        $res = [];
         $comment = $this->Comments->newEmptyEntity();
         if ($this->request->is('post')) {
             $comment = $this->Comments->patchEntity($comment, $this->request->getData());
             if ($this->Comments->save($comment)) {
-                $this->Flash->success(__('The comment has been saved.'));
+                $res = ["code" => 200,
+                    "message" => 'The comment has been saved.'];
 
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The comment could not be saved. Please, try again.'));
+            } else
+                $res = ["code" => 400,
+                    "message" => 'The comment could not be saved. Please, try again.'];
         }
-        $this->set(compact('comment'));
+        $this->set(compact('res'));
         $this->viewBuilder()->setOption('serialize', true);
 
     }
@@ -69,24 +77,27 @@ class CommentsController extends AppController
      * Edit method
      *
      * @param string|null $id Comment id.
-     * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|null|void Redirects on successful edit, renders view otherwise.
+     * @throws RecordNotFoundException When record not found.
      */
     public function edit($id = null)
     {
+        $res = [];
         $comment = $this->Comments->get($id, [
             'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $comment = $this->Comments->patchEntity($comment, $this->request->getData());
             if ($this->Comments->save($comment)) {
-                $this->Flash->success(__('The comment has been saved.'));
+                $res = ["code" => 200,
+                    "message" => 'The comment has been saved.'];
 
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The comment could not be saved. Please, try again.'));
+
+            } else
+                $res = ["code" => 400,
+                    "message" => 'The comment could not be saved. Please, try again.'];
         }
-        $this->set(compact('comment'));
+        $this->set(compact('res'));
         $this->viewBuilder()->setOption('serialize', true);
 
     }
@@ -95,20 +106,22 @@ class CommentsController extends AppController
      * Delete method
      *
      * @param string|null $id Comment id.
-     * @return \Cake\Http\Response|null|void Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|null|void Redirects to index.
+     * @throws RecordNotFoundException When record not found.
      */
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
         $comment = $this->Comments->get($id);
         if ($this->Comments->delete($comment)) {
-            $this->Flash->success(__('The comment has been deleted.'));
+            $res = ["code" => 200,
+                "message" => 'The comment has been deleted.'];
         } else {
-            $this->Flash->error(__('The comment could not be deleted. Please, try again.'));
+           $res = ["code" => 400,
+                    "message" => 'The comment could not be deleted. Please, try again.'];
         }
 
-        return $this->redirect(['action' => 'index']);
+        $this->set($res);
         $this->viewBuilder()->setOption('serialize', true);
 
     }
