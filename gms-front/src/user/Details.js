@@ -8,30 +8,35 @@ const Details = () => {
   const [loading, setLoading] = useState(true);
   const [blogDetails, setBlogDetails] = useState({});
   const [comments, setComments] = useState([]);
+  const [error, setError] = useState(false);
   const { id } = useParams();
 
   useEffect(() => {
+    if (error) throw new Error("lol");
     let isMounted = true;
 
-    blog.get(id).then(({ photo }) => {
-      if (!photo) throw new Error("lol");
-      if (isMounted)
-        setBlogDetails({
-          author: photo.author,
-          title: photo.title,
-          caption: photo.caption,
-          desc: photo.description,
-          imgName: photo.name,
+    blog
+      .get(id)
+      .then(({ photo }) => {
+        if (!photo) throw new Error("lol");
+        if (isMounted)
+          setBlogDetails({
+            author: photo.author,
+            title: photo.title,
+            caption: photo.caption,
+            desc: photo.description,
+            imgName: photo.name,
+          });
+        blog.comments(id).then((res) => {
+          if (isMounted) setComments(res || []);
         });
-      blog.comments(id).then((res) => {
-        if (isMounted) setComments(res);
-      });
-      setLoading(false);
-      return () => {
-        isMounted = false;
-      };
-    });
-  }, [id]);
+        setLoading(false);
+        return () => {
+          isMounted = false;
+        };
+      })
+      .catch(() => setError(true));
+  }, [id, error]);
 
   return (
     <div className="row">
