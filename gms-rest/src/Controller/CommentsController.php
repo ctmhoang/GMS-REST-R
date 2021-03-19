@@ -117,12 +117,19 @@ class CommentsController extends AppController
             $res = ["code" => 200,
                 "message" => 'The comment has been deleted.'];
         } else {
-           $res = ["code" => 400,
-                    "message" => 'The comment could not be deleted. Please, try again.'];
+            $res = ["code" => 400,
+                "message" => 'The comment could not be deleted. Please, try again.'];
         }
 
         $this->set($res);
         $this->viewBuilder()->setOption('serialize', true);
 
+    }
+
+    public function blog(string $id)
+    {
+        $comments = $this->Comments->find()->where(['pid' => 11])->toArray();
+        $this->set($comments);
+        $this->viewBuilder()->setOption('serialize', true);
     }
 }

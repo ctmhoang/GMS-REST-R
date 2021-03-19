@@ -3,18 +3,25 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Model\Entity\Photo;
+use App\Model\Table\PhotosTable;
+use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\Datasource\ResultSetInterface;
+use Cake\Http\Response;
+
 /**
  * Photos Controller
  *
- * @property \App\Model\Table\PhotosTable $Photos
- * @method \App\Model\Entity\Photo[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @property PhotosTable $Photos
+ *
+ * @method Photo[]|ResultSetInterface paginate($object = null, array $settings = [])
  */
 class PhotosController extends AppController
 {
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|null|void Renders view
+     * @return Response|null|void Renders view
      */
     public function index()
     {
@@ -28,8 +35,8 @@ class PhotosController extends AppController
      * View method
      *
      * @param string|null $id Photo id.
-     * @return \Cake\Http\Response|null|void Renders view
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|null|void Renders view
+     * @throws RecordNotFoundException When record not found.
      */
     public function view($id = null)
     {
@@ -44,7 +51,7 @@ class PhotosController extends AppController
     /**
      * Add method
      *
-     * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
+     * @return Response|null|void Redirects on successful add, renders view otherwise.
      */
     public function add()
     {
@@ -69,8 +76,8 @@ class PhotosController extends AppController
      * Edit method
      *
      * @param string|null $id Photo id.
-     * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|null|void Redirects on successful edit, renders view otherwise.
+     * @throws RecordNotFoundException When record not found.
      */
     public function edit($id = null)
     {
@@ -96,8 +103,8 @@ class PhotosController extends AppController
      * Delete method
      *
      * @param string|null $id Photo id.
-     * @return \Cake\Http\Response|null|void Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|null|void Redirects to index.
+     * @throws RecordNotFoundException When record not found.
      */
     public function delete($id = null)
     {
@@ -121,4 +128,5 @@ class PhotosController extends AppController
         $this->set($photos);
         $this->viewBuilder()->setOption("serialize", true);
     }
+
 }
