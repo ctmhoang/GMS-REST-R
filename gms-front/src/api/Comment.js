@@ -2,14 +2,14 @@ export default class Comment {
   static push(pid, name, content) {
     const url = `http://localhost:8765/comments/add.json`;
     const data = { pid: pid, author: name, body: content };
+    const formData = new FormData();
+    Object.entries(data).forEach(({ key, value }) =>
+      formData.append(key, value)
+    );
     const params = {
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "content-type": "application/json; charset=UTF-8",
-      },
-      body: data,
+      body: formData,
       method: "POST",
     };
-    fetch(url, params).then((res) => res.json());
+    return fetch(url, params).then((res) => res.json());
   }
 }
