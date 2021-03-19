@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import ErrorBoundary from "../utils/ErrorBoundary";
 import blog from "../api/Blog";
 
 const Details = () => {
@@ -8,15 +9,22 @@ const Details = () => {
   const { id } = useParams();
 
   useEffect(() => {
+    let isMounted = true;
+
     blog.get(id).then(({ photo }) => {
-      setBlogDetails({
-        author: photo.author,
-        title: photo.title,
-        caption: photo.caption,
-        desc: photo.description,
-        imgName: photo.name,
-      });
+      if (!photo) throw new Error("lol");
+      if (isMounted)
+        setBlogDetails({
+          author: photo.author,
+          title: photo.title,
+          caption: photo.caption,
+          desc: photo.description,
+          imgName: photo.name,
+        });
       setLoading(false);
+      return () => {
+        isMounted = false;
+      };
     });
   }, [id]);
 
@@ -78,4 +86,10 @@ const Details = () => {
   );
 };
 
-export default Details;
+export default function detailsWithErrorBoundary(props) {
+  return (
+    <ErrorBoundary>
+      <Details {...props} />
+    </ErrorBoundary>
+  );
+}
