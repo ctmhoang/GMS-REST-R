@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import ErrorBoundary from "../utils/ErrorBoundary";
 import blog from "../api/Blog";
+import Comments from "./Comments";
 
 const Details = () => {
   const [loading, setLoading] = useState(true);
   const [blogDetails, setBlogDetails] = useState({});
+  const [comments, setComments] = useState([]);
   const { id } = useParams();
 
   useEffect(() => {
@@ -21,6 +23,9 @@ const Details = () => {
           desc: photo.description,
           imgName: photo.name,
         });
+      blog.comments(id).then((res) => {
+        if (isMounted) setComments(res);
+      });
       setLoading(false);
       return () => {
         isMounted = false;
@@ -80,6 +85,7 @@ const Details = () => {
             </form>
           </div>
           <hr />
+          <Comments data={comments} />
         </div>
       )}
     </div>

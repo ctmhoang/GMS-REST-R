@@ -14,4 +14,10 @@ export default class Blog {
     const url = `http://localhost:8765/photos/view/${id}.json`;
     return fetch(url).then((res) => res.json());
   }
+
+  static comments(id) {
+    if (!isFinite(id)) return null;
+    const url = `http://localhost:8765/comments/blog/${id}.json`;
+    return fetch(url).then((res) => res.json());
+  }
 }

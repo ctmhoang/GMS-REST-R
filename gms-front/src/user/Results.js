@@ -7,11 +7,12 @@ const Result = ({ data }) => {
       {!data.length ? (
         <h1>No data found!</h1>
       ) : (
-        data.map((blog) => (
+        data.map(({ name, description, id }) => (
           <BlogThumbnail
-            imgName={blog.name}
-            description={blog.description}
-            key={blog.id}
+            imgName={name}
+            description={description}
+            id={id}
+            key={id}
           />
         ))
       )}
