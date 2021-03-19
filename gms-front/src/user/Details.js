@@ -1,33 +1,38 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import blog from "../api/Blog";
 
-class Details extends Component {
-  state = { loading: true };
-  componentDidMount() {
-    console.log(this.props.id);
-    blog.get(this.props.id).then(({ photo }) => {
-      this.setState({
+const Details = () => {
+  const [loading, setLoading] = useState(true);
+  const [blogDetails, setBlogDetails] = useState({});
+  const { id } = useParams();
+
+  useEffect(() => {
+    blog.get(id).then(({ photo }) => {
+      setBlogDetails({
         author: photo.author,
         title: photo.title,
         caption: photo.caption,
         desc: photo.description,
         imgName: photo.name,
-        loading: false,
       });
-    }, console.error);
-  }
-  render() {
-    if (this.state.loading) return <h1>Loading ...</h1>;
-    const { author, title, caption, desc, imgName } = this.state;
-    return (
-      <div className="row">
-        <div className="col-lg-12">
-          <h1>{title}</h1>
+      setLoading(false);
+    });
+  }, [id]);
 
-          <p className="lead">{author == null ? "Anonymous" : author}</p>
+  return (
+    <div className="row">
+      {loading ? (
+        <h1>Loading ...</h1>
+      ) : (
+        <div className="col-lg-12">
+          <h1>{blogDetails.title}</h1>
+
+          <p className="lead">
+            {blogDetails.author == null ? "Anonymous" : blogDetails.author}
+          </p>
 
           <hr />
-
           <p>
             <span className="glyphicon glyphicon-time"></span> Posted on August
             24, 2030 at 9:00 PM
@@ -35,11 +40,15 @@ class Details extends Component {
 
           <hr />
 
-          <img className="img-responsive" src={imgName} alt={caption} />
+          <img
+            className="img-responsive"
+            src={blogDetails.imgName}
+            alt={blogDetails.caption}
+          />
 
           <hr />
 
-          <p className="lead">{desc}</p>
+          <p className="lead">{blogDetails.desc}</p>
 
           <hr />
 
@@ -64,9 +73,9 @@ class Details extends Component {
           </div>
           <hr />
         </div>
-      </div>
-    );
-  }
-}
+      )}
+    </div>
+  );
+};
 
 export default Details;
