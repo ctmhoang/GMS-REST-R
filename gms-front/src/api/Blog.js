@@ -8,4 +8,10 @@ export default class Blog {
     const url = `http://localhost:8765/photos/search/${title}.json`;
     return fetch(url).then((res) => res.json());
   }
+
+  static get(id) {
+    if (!isFinite(id)) return null;
+    const url = `http://localhost:8765/photos/view/${id}.json`;
+    return fetch(url).then((res) => res.json());
+  }
 }
