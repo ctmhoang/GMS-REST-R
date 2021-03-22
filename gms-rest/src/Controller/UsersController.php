@@ -17,6 +17,27 @@ use Cake\Http\Response;
  */
 class UsersController extends AppController
 {
+    public function login(){
+        $code = '400';
+        if($this->request->is('post')){
+            $user = $this->Auth->identify();
+            if($user)
+            {
+                $this->Auth->setUser($user);
+                $code =  $this->Auth->user('usr');
+            }
+        }
+        $this->set(compact('code'));
+        $this->viewBuilder()->setOption('serialize', true);
+
+    }
+
+    public function logout(){
+        $this->Auth->logout();
+        $this->Auth->
+        $this->set('message',"logout successfully");
+        $this->viewBuilder()->setOption('serialize', true);
+    }
     /**
      * Index method
      *
@@ -94,7 +115,7 @@ class UsersController extends AppController
            else $res = ["code" => 400,
                "message" => "The user has not been save. Please try again!"];
         }
-        $this->set(compact('res'));
+        $this->set(compact('res', 'user'));
         $this->viewBuilder()->setOption('serialize', true);
 
     }
