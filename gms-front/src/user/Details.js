@@ -2,12 +2,15 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import ErrorBoundary from "../utils/ErrorBoundary";
 import blog from "../api/Blog";
+import comment from "../api/Comment";
 import Comments from "./Comments";
 
 const Details = () => {
   const [loading, setLoading] = useState(true);
   const [blogDetails, setBlogDetails] = useState({});
   const [comments, setComments] = useState([]);
+  const [name, setName] = useState("");
+  const [content, setContent] = useState("");
   const [error, setError] = useState(false);
   const { id } = useParams();
 
@@ -37,6 +40,12 @@ const Details = () => {
       })
       .catch(() => setError(true));
   }, [id, error]);
+
+  async function postMessage(pid, name, message) {
+    const data = await comment.push(pid, name, message);
+    const res = data.res;
+    setComments(Array.isArray(res) ? res : []);
+  }
 
   return (
     <div className="row">
@@ -72,13 +81,24 @@ const Details = () => {
 
           <div className="well">
             <h4>Leave a Comment:</h4>
-            <form>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                postMessage(id, name, content);
+              }}
+            >
               <div className="form-group">
                 <label htmlFor="author">Author</label>
-                <input type="text" name="author" className="form-control" />
+                <input
+                  type="text"
+                  name="author"
+                  className="form-control"
+                  onChange={(e) => setName(e.target.value)}
+                />
               </div>
               <div className="form-group">
                 <textarea
+                  onChange={(e) => setContent(e.target.value)}
                   name="body"
                   className="form-control"
                   rows="3"

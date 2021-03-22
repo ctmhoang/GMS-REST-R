@@ -1,6 +1,6 @@
 import React from "react";
 import { render } from "react-dom";
-import { Navigate, Route, Routes } from "react-router";
+import { Route, Routes } from "react-router";
 import { BrowserRouter } from "react-router-dom";
 import SearchParams from "./user/SearchParams";
 import Details from "./user/Details";
