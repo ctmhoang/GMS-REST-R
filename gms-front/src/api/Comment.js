@@ -1,11 +1,11 @@
 export default class Comment {
   static push(pid, name, content) {
-    var formdata = new FormData();
+    const formdata = new FormData();
     formdata.append("pid", pid);
     formdata.append("author", name);
     formdata.append("body", content);
 
-    var requestOptions = {
+    const requestOptions = {
       method: "POST",
       body: formdata,
       redirect: "follow",
