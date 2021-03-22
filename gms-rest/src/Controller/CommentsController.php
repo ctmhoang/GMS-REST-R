@@ -61,8 +61,7 @@ class CommentsController extends AppController
         if ($this->request->is('post')) {
             $comment = $this->Comments->patchEntity($comment, $this->request->getData());
             if ($this->Comments->save($comment)) {
-                $res = ["code" => 200,
-                    "message" => 'The comment has been saved.'];
+                $res = $this->Comments->find()->where(['pid' => $comment->pid])->toArray();
 
             } else
                 $res = ["code" => 400,
@@ -128,7 +127,7 @@ class CommentsController extends AppController
 
     public function blog(string $id)
     {
-        $comments = $this->Comments->find()->where(['pid' => 11])->toArray();
+        $comments = $this->Comments->find()->where(['pid' => $id])->toArray();
         $this->set($comments);
         $this->viewBuilder()->setOption('serialize', true);
     }
