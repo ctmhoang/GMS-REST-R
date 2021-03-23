@@ -14,7 +14,6 @@ const Login = () => {
           e.preventDefault();
           user.login(userName, password).then((res) => {
             if (res.code == 400) {
-              console.log("lol");
               setUserName("");
               setPassword("");
             } else {
