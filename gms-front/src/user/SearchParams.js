@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import blog from "../api/Blog";
 import Result from "./Results";
+import "../../css/user.css";
 
 const SearchParams = () => {
   const [query, setQuery] = useState("");

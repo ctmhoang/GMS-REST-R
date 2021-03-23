@@ -1,6 +1,8 @@
 import React, { Fragment } from "react";
 
-const Navbar = ({ isAuth, userName }) => {
+const Navbar = () => {
+  const isAuth = localStorage.getItem("isAuth") || false;
+  const userName = localStorage.getItem("userName") || "";
   return (
     <div className="container">
       {isAuth ? (

@@ -5,9 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 import SearchParams from "./user/SearchParams";
 import Details from "./user/Details";
 import NavBar from "./component/Navbar";
-
-let isAuth = localStorage.getItem("auth") || false;
-let userName = localStorage.getItem("userName") || "";
+import Admin from "./Admin";
 
 const App = () => {
   return (
@@ -16,14 +14,11 @@ const App = () => {
         <Routes>
           <Route path="/" element={<SearchParams />} />
           <Route path="/details/:id" element={<Details />} />
+          <Route path="admin/*" element={<Admin />} />
         </Routes>
       </BrowserRouter>
     </React.StrictMode>
   );
 };
-
-render(
-  <NavBar isAuth={true} userName="Cameron Darren" />,
-  document.getElementById("nav")
-);
+render(<NavBar />, document.querySelector("nav"));
 render(<App />, document.getElementById("root"));
