@@ -4,6 +4,10 @@ import { Route, Routes } from "react-router";
 import { BrowserRouter } from "react-router-dom";
 import SearchParams from "./user/SearchParams";
 import Details from "./user/Details";
+import NavBar from "./component/Navbar";
+
+let isAuth = localStorage.getItem("auth") || false;
+let userName = localStorage.getItem("userName") || "";
 
 const App = () => {
   return (
@@ -18,4 +22,8 @@ const App = () => {
   );
 };
 
+render(
+  <NavBar isAuth={true} userName="Cameron Darren" />,
+  document.getElementById("nav")
+);
 render(<App />, document.getElementById("root"));
