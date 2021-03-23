@@ -1,2 +1,5 @@
-@import url('./blog-home.css');
-@import url('./styles.css');
+@import url("./sb-admin.css");
+@import url("../font-awesome/css/font-awesome.min.css");
+@import url("./dropzone.css");
+@import url("./blog-home.css");
+@import url("./styles.css");

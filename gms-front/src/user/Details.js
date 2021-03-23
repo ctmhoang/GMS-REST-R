@@ -4,7 +4,6 @@ import ErrorBoundary from "../utils/ErrorBoundary";
 import blog from "../api/Blog";
 import comment from "../api/Comment";
 import Comments from "./Comments";
-import "../../css/user.css";
 
 const Details = () => {
   const [loading, setLoading] = useState(true);
