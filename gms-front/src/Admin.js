@@ -16,6 +16,12 @@ const Admin = () => {
         path="dashboard"
       />
       <PrivateRoute
+        component={<DashBoard />}
+        redirectTo="/admin/login"
+        isAuth={localStorage.getItem("isAuth")}
+        path="/"
+      />
+      <PrivateRoute
         component={<UserManagement />}
         redirectTo="/admin/login"
         isAuth={localStorage.getItem("isAuth")}
