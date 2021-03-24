@@ -178,6 +178,35 @@ const Navbar = () => {
               </ul>
             </li>
           </ul>
+          <div className="collapse navbar-collapse navbar-ex1-collapse">
+            <ul className="nav navbar-nav side-nav">
+              <li>
+                <a href="index.php">
+                  <i className="fa fa-fw fa-dashboard"></i> Dashboard
+                </a>
+              </li>
+              <li>
+                <a href="user.php">
+                  <i className="fa fa-fw fa-bar-chart-o"></i> Users
+                </a>
+              </li>
+              <li>
+                <a href="upload.php">
+                  <i className="fa fa-fw fa-table"></i> Upload
+                </a>
+              </li>
+              <li>
+                <a href="photo.php">
+                  <i className="fa fa-fw fa-table"></i> Photo
+                </a>
+              </li>
+              <li>
+                <a href="comment.php ">
+                  <i className="fa fa-fw fa-edit"></i> Comments
+                </a>
+              </li>
+            </ul>
+          </div>
         </>
       ) : (
         <>

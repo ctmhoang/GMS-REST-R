@@ -16,4 +16,9 @@ export default class Comment {
       requestOptions
     ).then((response) => response.json());
   }
+  static num() {
+    return fetch("http://localhost:8765/comments/count.json").then((response) =>
+      response.json()
+    );
+  }
 }

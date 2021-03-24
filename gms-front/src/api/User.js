@@ -24,4 +24,10 @@ export default class User {
 
     return fetch("http://localhost:8765/users/logout.json", requestOptions);
   }
+
+  static num() {
+    return fetch("http://localhost:8765/users/count.json").then((response) =>
+      response.json()
+    );
+  }
 }
