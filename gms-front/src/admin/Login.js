@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 
 import user from "../api/User";
@@ -6,6 +6,15 @@ const Login = () => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const nav = useNavigate();
+
+  useEffect(() => {
+    let isAuth = localStorage.getItem("isAuth");
+    if (isAuth) nav("/admin/dashboard");
+    return () => {
+      isAuth = false;
+    };
+  }, [nav]);
+
   return (
     <div className="col-md-4 col-md-offset-3">
       <form
@@ -19,7 +28,7 @@ const Login = () => {
             } else {
               localStorage.setItem("isAuth", true);
               localStorage.setItem("userName", res.code);
-              nav("/");
+              nav("/admin/dashboard");
             }
           });
         }}

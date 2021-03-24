@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import Login from "./admin/Login";
 import PrivateRoute from "./utils/PrivateRoute";
 import DashBoard from "./admin/Dashboard";
+import UserManagement from "./admin/UserManagement";
 const Admin = () => {
   return (
     <Routes>
@@ -13,6 +14,12 @@ const Admin = () => {
         redirectTo="/admin/login"
         isAuth={localStorage.getItem("isAuth")}
         path="dashboard"
+      />
+      <PrivateRoute
+        component={<UserManagement />}
+        redirectTo="/admin/login"
+        isAuth={localStorage.getItem("isAuth")}
+        path="users"
       />
     </Routes>
   );

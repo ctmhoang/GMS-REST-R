@@ -30,4 +30,19 @@ export default class User {
       response.json()
     );
   }
+
+  static fetch() {
+    var requestOptions = {
+      method: "GET",
+      redirect: "follow",
+      credentials: "include",
+    };
+
+    return fetch("http://localhost:8765/users.json", requestOptions).then(
+      (response) => {
+        console.log(response);
+        response.json();
+      }
+    );
+  }
 }
