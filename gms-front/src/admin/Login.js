@@ -8,11 +8,7 @@ const Login = () => {
   const nav = useNavigate();
 
   useEffect(() => {
-    let isAuth = localStorage.getItem("isAuth");
-    if (isAuth) nav("/admin/dashboard");
-    return () => {
-      isAuth = false;
-    };
+    if (localStorage.getItem("isAuth")) nav("/admin/dashboard");
   }, [nav]);
 
   return (
@@ -28,7 +24,7 @@ const Login = () => {
             } else {
               localStorage.setItem("isAuth", true);
               localStorage.setItem("userName", res.code);
-              nav("/admin/dashboard");
+              nav("/admin");
             }
           });
         }}

@@ -8,6 +8,7 @@ export default class User {
       method: "POST",
       body: formdata,
       redirect: "follow",
+      credentials: "include",
     };
 
     return fetch(
@@ -20,6 +21,7 @@ export default class User {
     const requestOptions = {
       method: "GET",
       redirect: "follow",
+      credentials: "include",
     };
 
     return fetch("http://localhost:8765/users/logout.json", requestOptions);
@@ -38,11 +40,9 @@ export default class User {
       credentials: "include",
     };
 
-    return fetch("http://localhost:8765/users.json", requestOptions).then(
-      (response) => {
-        console.log(response);
-        response.json();
-      }
-    );
+    return fetch(
+      "http://localhost:8765/users.json",
+      requestOptions
+    ).then((response) => response.json());
   }
 }
