@@ -131,4 +131,9 @@ class CommentsController extends AppController
         $this->set($comments);
         $this->viewBuilder()->setOption('serialize', true);
     }
+    public function count(){
+        $size = $this->Comments->find()->count();
+        $this->set('size',$size);
+        $this->viewBuilder()->setOption('serialize', true);
+    }
 }

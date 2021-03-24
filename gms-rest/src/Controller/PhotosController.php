@@ -129,4 +129,9 @@ class PhotosController extends AppController
         $this->viewBuilder()->setOption("serialize", true);
     }
 
+    public function count(){
+        $size = $this->Photos->find()->count();
+        $this->set('size',$size);
+        $this->viewBuilder()->setOption('serialize', true);
+    }
 }
