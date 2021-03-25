@@ -96,7 +96,7 @@ class UsersController extends AppController
             }
 
         }
-        $this->set(compact('res'));
+        $this->set($res);
         $this->viewBuilder()->setOption('serialize', true);
 
     }
