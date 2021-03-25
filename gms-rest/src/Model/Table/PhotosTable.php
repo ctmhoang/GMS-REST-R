@@ -40,6 +40,8 @@ class PhotosTable extends Table
         $this->setTable('photos');
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
+
+        $this->hasMany('Comments', ['foreignKey' => 'pid', 'dependent' => true]);
     }
 
     /**

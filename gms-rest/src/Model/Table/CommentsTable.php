@@ -40,6 +40,8 @@ class CommentsTable extends Table
         $this->setTable('comments');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
+
+        $this->belongsTo('Photos', ['foreignKey' => 'pid']);
     }
 
     /**
