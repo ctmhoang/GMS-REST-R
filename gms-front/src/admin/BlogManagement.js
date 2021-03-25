@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import blog from "../api/Blog";
 
 const BlogManagement = () => {
@@ -6,9 +7,11 @@ const BlogManagement = () => {
   const [isChange, setIsChange] = useState(true);
 
   useEffect(() => {
-    //TOODO
     if (isChange) {
-      setBlogs([]);
+      blog
+        .blogs()
+        .then(({ photos }) => setBlogs(photos))
+        .catch(console.error);
       setIsChange(false);
     }
   }, []);
@@ -34,23 +37,28 @@ const BlogManagement = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {blogs.map((blog, idx) => (
+                  {blogs.map((b, idx) => (
                     <tr key={idx}>
                       <td>
                         <img className="admin-photo-thumbnail" src="#" alt="" />
 
                         <div className="action_links">
-                          <a className="delete_link" href="#">
+                          <button
+                            className="btn"
+                            onClick={(e) => {
+                              e.preventDefault();
+                            }}
+                          >
                             Delete
-                          </a>
-                          <a href="#">Edit</a>
-                          <a href="#">View</a>
+                          </button>
+                          <Link to={`/admin/blogs/edit/${b.id}`}>Edit</Link>{" "}
+                          <Link to={`/details/${b.id}`}>View</Link>{" "}
                         </div>
                       </td>
-                      <td>{blog.id}</td>
-                      <td>{blog.name}</td>
-                      <td>{blog.title}</td>
-                      <td>{blog.size}</td>
+                      <td>{b.id}</td>
+                      <td>{b.name}</td>
+                      <td>{b.title}</td>
+                      <td>{b.size}</td>
                     </tr>
                   ))}
                 </tbody>
