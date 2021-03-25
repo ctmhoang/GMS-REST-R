@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import comment from "../api/Comment";
 
 const CommentManagement = () => {
@@ -6,9 +7,11 @@ const CommentManagement = () => {
   const [isChange, setIsChange] = useState(true);
 
   useEffect(() => {
-    //TOODO
     if (isChange) {
-      setComments([]);
+      comment
+        .fetch()
+        .then(({ comments }) => setComments(comments))
+        .catch(console.error);
       setIsChange(false);
     }
   }, [isChange]);
@@ -32,17 +35,27 @@ const CommentManagement = () => {
                   {comments.map((com, idx) => (
                     <tr key={idx}>
                       <td>
-                        <a href="../photo.php?id=<?=$comment->pid?>">
-                          {com.id}{" "}
-                        </a>
+                        <Link to={`/details/${com.pid}`}>{com.id}</Link>
                       </td>
 
                       <td>
                         {com.author}
                         <div className="action_links">
-                          <a href="delete_comment.php?id=<?php echo $comment->id; ?>">
+                          <button
+                            className="btn"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              comment
+                                .del(com.id)
+                                .then((res) => {
+                                  if (res.code != 200) throw new Error("lol");
+                                  setIsChange(true);
+                                })
+                                .catch(console.error);
+                            }}
+                          >
                             Delete
-                          </a>
+                          </button>
                         </div>
                       </td>
 

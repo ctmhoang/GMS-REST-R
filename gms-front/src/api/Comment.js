@@ -21,4 +21,20 @@ export default class Comment {
       response.json()
     );
   }
+  static fetch() {
+    return fetch("http://localhost:8765/comments.json").then((response) =>
+      response.json()
+    );
+  }
+  static del(id) {
+    var requestOptions = {
+      method: "POST",
+      redirect: "follow",
+    };
+
+    return fetch(
+      `http://localhost:8765/comments/delete/${id}.json`,
+      requestOptions
+    ).then((response) => response.json());
+  }
 }
