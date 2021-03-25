@@ -33,7 +33,7 @@ class UsersController extends AppController
             if($user)
             {
                 $this->Auth->setUser($user);
-                $code =  $this->Auth->user('usr');
+                $code =  $this->Auth->user('fst') . ' ' . $this->Auth->user('lst');
             }
         }
         $this->set(compact('code'));

@@ -97,8 +97,13 @@ class PhotosController extends AppController
                 }
             }
 
+            $size = $file->getSize();
+
             $res = ["code" => 200,
-                "message" => 'uploaded successfully'];
+                "message" => 'uploaded successfully',
+                'size' => $size,
+                'type' => $type,
+                'name' => $name];
             $this->set($res);
             $this->viewBuilder()->setOption('serialize', true);
 
