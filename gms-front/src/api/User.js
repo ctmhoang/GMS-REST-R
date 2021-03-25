@@ -64,4 +64,38 @@ export default class User {
       requestOptions
     ).then((response) => response.json());
   }
+  static get(id) {
+    return fetch(
+      `http://localhost:8765/users/view/${id}.json`
+    ).then((response) => response.json());
+  }
+  static edit(id, usr, pwd, fst, lst) {
+    var formdata = new FormData();
+    formdata.append("usr", usr);
+    formdata.append("pwd", pwd);
+    formdata.append("lst", lst);
+    formdata.append("fst", fst);
+
+    var requestOptions = {
+      method: "POST",
+      body: formdata,
+      redirect: "follow",
+    };
+
+    return fetch(
+      `http://localhost:8765/users/edit/${id}.json`,
+      requestOptions
+    ).then((response) => response.json());
+  }
+  static del(id) {
+    var requestOptions = {
+      method: "POST",
+      redirect: "follow",
+    };
+
+    return fetch(
+      `http://localhost:8765/users/delete/${id}.json`,
+      requestOptions
+    ).then((response) => response.json());
+  }
 }
