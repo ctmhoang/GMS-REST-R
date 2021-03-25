@@ -53,4 +53,41 @@ export default class Blog {
       requestOptions
     ).then((response) => response.json());
   }
+
+  static upload(fileInput) {
+    var formdata = new FormData();
+    formdata.append("file", fileInput.files[0], fileInput.files[0].name);
+
+    var requestOptions = {
+      method: "POST",
+      body: formdata,
+      redirect: "follow",
+    };
+
+    return fetch(
+      "http://localhost:8765/photos/upload.json",
+      requestOptions
+    ).then((response) => response.json());
+  }
+  static add(title, size, type, name, author) {
+    var formdata = new FormData();
+    formdata.append("title", title);
+    formdata.append("desc", "");
+    formdata.append("author", author);
+    formdata.append("caption", "");
+    formdata.append("name", name);
+    formdata.append("type", type);
+    formdata.append("size", size);
+
+    var requestOptions = {
+      method: "POST",
+      body: formdata,
+      redirect: "follow",
+    };
+
+    return fetch(
+      "http://localhost:8765/photos/add.json",
+      requestOptions
+    ).then((response) => response.json());
+  }
 }
