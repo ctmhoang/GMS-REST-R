@@ -25,4 +25,15 @@ export default class Blog {
       response.json()
     );
   }
+  static del(id) {
+    var requestOptions = {
+      method: "POST",
+      redirect: "follow",
+    };
+
+    return fetch(
+      `http://localhost:8765/photos/delete/${id}.json`,
+      requestOptions
+    ).then((response) => response.json());
+  }
 }

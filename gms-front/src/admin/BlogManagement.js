@@ -14,7 +14,7 @@ const BlogManagement = () => {
         .catch(console.error);
       setIsChange(false);
     }
-  }, []);
+  }, [isChange]);
   return (
     <div id="page-wrapper">
       <div className="container-fluid">
@@ -47,6 +47,13 @@ const BlogManagement = () => {
                             className="btn"
                             onClick={(e) => {
                               e.preventDefault();
+                              blog
+                                .del(b.id)
+                                .then((res) => {
+                                  if (res.code != 200) throw new Error("lol");
+                                  setIsChange(true);
+                                })
+                                .catch(console.error);
                             }}
                           >
                             Delete
