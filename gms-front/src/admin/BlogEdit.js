@@ -55,7 +55,10 @@ const BlogEdit = () => {
 
                 <div className="form-group">
                   <div className="thumbnail">
-                    <img src="#" alt="" />
+                    <img
+                      src={`http://localhost:8765/upload/${imgName}`}
+                      alt=""
+                    />
                   </div>
                 </div>
 

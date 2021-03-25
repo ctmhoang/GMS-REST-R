@@ -69,7 +69,7 @@ const Details = () => {
 
           <img
             className="img-responsive"
-            src={blogDetails.imgName}
+            src={`http://localhost:8765/upload/${blogDetails.imgName}`}
             alt={blogDetails.caption}
           />
 
