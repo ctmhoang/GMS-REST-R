@@ -45,4 +45,23 @@ export default class User {
       requestOptions
     ).then((response) => response.json());
   }
+
+  static add(username, password, lstName, fstName) {
+    var formdata = new FormData();
+    formdata.append("usr", username);
+    formdata.append("pwd", password);
+    formdata.append("lst", lstName);
+    formdata.append("fst", fstName);
+
+    var requestOptions = {
+      method: "POST",
+      body: formdata,
+      redirect: "follow",
+    };
+
+    return fetch(
+      "http://localhost:8765/users/add.json",
+      requestOptions
+    ).then((response) => response.json());
+  }
 }
