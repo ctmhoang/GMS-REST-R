@@ -1,16 +1,29 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import user from "../api/User";
 
 const UserManagement = () => {
   const [users, setUsers] = useState([]);
+  const [isChange, setIsChange] = useState(true);
+
+  const del = async (id) => {
+    try {
+      const res = await user.del(id);
+      if (res.code != 200) throw new Error("lol");
+      setIsChange(true);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   useEffect(() => {
-    user
-      .fetch()
-      .then((res) => {
+    if (isChange)
+      user.fetch().then((res) => {
         setUsers(res.users);
-      })
-      .catch(console.err);
-  }, []);
+        setIsChange(false);
+      });
+  }, [isChange]);
+
   return (
     <div id="page-wrapper">
       <div className="container-fluid">
@@ -18,9 +31,9 @@ const UserManagement = () => {
           <div className="col-lg-12">
             <h1 className="page-header">Users</h1>
 
-            <a href="add_user.php" className="btn btn-primary">
+            <Link className="btn btn-primary" to="/admin/users/add">
               Add User
-            </a>
+            </Link>
 
             <div className="col-md-12">
               <table className="table table-hover">
@@ -33,24 +46,33 @@ const UserManagement = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {users.map((user, idx) => (
+                  {users.map(({ id, usr, fst, lst }, idx) => (
                     <tr key={idx}>
-                      <td>{user.id}</td>
+                      <td>{id}</td>
 
                       <td>
-                        {user.usr}
+                        {usr}
                         <div className="action_links">
-                          <a href="delete_user.php?id=<?php echo $user->id; ?>">
+                          <button
+                            onClick={(e) => {
+                              e.preventDefault();
+                              del(id);
+                            }}
+                          >
                             Delete
-                          </a>
-                          <a href="edit_user.php?id=<?php echo $user->id; ?>">
+                          </button>
+                          <Link
+                            className="btn"
+                            role="button"
+                            to={`/admin/users/edit/${id}`}
+                          >
                             Edit
-                          </a>
+                          </Link>
                         </div>
                       </td>
 
-                      <td>{user.fst}</td>
-                      <td>{user.lst}</td>
+                      <td>{fst}</td>
+                      <td>{lst}</td>
                     </tr>
                   ))}
                 </tbody>
