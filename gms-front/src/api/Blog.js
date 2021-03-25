@@ -36,4 +36,21 @@ export default class Blog {
       requestOptions
     ).then((response) => response.json());
   }
+  static edit(id, title, cap, desc) {
+    var formdata = new FormData();
+    formdata.append("title", title);
+    formdata.append("caption", cap);
+    formdata.append("description", desc);
+
+    var requestOptions = {
+      method: "POST",
+      body: formdata,
+      redirect: "follow",
+    };
+
+    return fetch(
+      `http://localhost:8765/photos/edit/${id}.json`,
+      requestOptions
+    ).then((response) => response.json());
+  }
 }

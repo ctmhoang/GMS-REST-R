@@ -1,19 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import blog from "../api/Blog";
+import ErrorBoundary from "../utils/ErrorBoundary";
 
-const BlogEdit = ({
-  id,
-  author,
-  title,
-  caption,
-  description,
-  name,
-  type,
-  size,
-}) => {
-  const [titleBlog, setTitleBlog] = useState(title);
-  const [capionBlog, setCapionBlog] = useState(caption);
-  const [desc, setDesc] = useState(description);
+const BlogEdit = () => {
+  const [titleBlog, setTitleBlog] = useState("");
+  const [capionBlog, setCapionBlog] = useState("");
+  const [desc, setDesc] = useState("");
+  const [imgName, setImgName] = useState("");
+  const [imgSize, setImgSize] = useState("");
+  const { id } = useParams();
+  const nav = useNavigate();
+
+  useEffect(() => {
+    blog.get(id).then(({ photo }) => {
+      if (photo == null) throw new Error("lol");
+      const { title, caption, description, name, size } = photo;
+      setTitleBlog(title || "");
+      setCapionBlog(caption || "");
+      setDesc(description || "");
+      setImgName(name || "");
+      setImgSize(size || "");
+    });
+  }, [id]);
   return (
     <div id="page-wrapper">
       <div className="container-fluid">
@@ -24,7 +33,15 @@ const BlogEdit = ({
               <small>Subheading</small>
             </h1>
 
-            <form action="" method="post">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                blog.edit(id, titleBlog, capionBlog, desc).then((res) => {
+                  if (res.code != 200) throw new Error("lol");
+                  nav("/admin/blogs");
+                });
+              }}
+            >
               <div className="col-md-8">
                 <div className="form-group">
                   <input
@@ -37,9 +54,9 @@ const BlogEdit = ({
                 </div>
 
                 <div className="form-group">
-                  <a className="thumbnail" href="#">
+                  <div className="thumbnail">
                     <img src="#" alt="" />
-                  </a>
+                  </div>
                 </div>
 
                 <div className="form-group">
@@ -85,18 +102,13 @@ const BlogEdit = ({
                         <span className="data photo_id_box">{id}</span>
                       </p>
                       <p className="text">
-                        Filename: <span className="data">{name}</span>
+                        Filename: <span className="data">{imgName}</span>
                       </p>
                       <p className="text">
-                        File Size: <span className="data">{size}</span>
+                        File Size: <span className="data">{imgSize}</span>
                       </p>
                     </div>
                     <div className="info-box-footer clearfix">
-                      <div className="info-box-delete pull-left">
-                        <a href="#" className="btn btn-danger btn-lg ">
-                          Delete
-                        </a>
-                      </div>
                       <div className="info-box-update pull-right ">
                         <input
                           type="submit"
@@ -117,4 +129,10 @@ const BlogEdit = ({
   );
 };
 
-export default BlogEdit;
+export default function editWithErrorBoundary(props) {
+  return (
+    <ErrorBoundary>
+      <BlogEdit {...props} />
+    </ErrorBoundary>
+  );
+}
