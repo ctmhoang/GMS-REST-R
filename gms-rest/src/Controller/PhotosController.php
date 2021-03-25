@@ -67,7 +67,7 @@ class PhotosController extends AppController
                 $res = ["code" => 400,
                     "message" => 'The photo could not be saved. Please, try again.'];
         }
-        $this->set(compact('res'));
+        $this->set($res);
         $this->viewBuilder()->setOption('serialize', true);
 
     }
@@ -94,7 +94,7 @@ class PhotosController extends AppController
                 $res = ["code" => 400,
                     "message" => 'The photo could not be saved. Please, try again.'];
         }
-        $this->set(compact('res'));
+        $this->set($res);
         $this->viewBuilder()->setOption('serialize', true);
 
     }
