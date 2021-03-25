@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import photo from "../api/Photo";
+import blog from "../api/Blog";
 
 const Upload = () => {
   const [title, setTitle] = useState("");
