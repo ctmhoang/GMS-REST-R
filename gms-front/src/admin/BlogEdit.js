@@ -7,7 +7,7 @@ const BlogEdit = () => {
   const [titleBlog, setTitleBlog] = useState("");
   const [capionBlog, setCapionBlog] = useState("");
   const [desc, setDesc] = useState("");
-  const [imgName, setImgName] = useState("");
+  const [imgName, setImgName] = useState("http://placecorgi.com/250");
   const [imgSize, setImgSize] = useState("");
   const { id } = useParams();
   const nav = useNavigate();
@@ -19,7 +19,7 @@ const BlogEdit = () => {
       setTitleBlog(title || "");
       setCapionBlog(caption || "");
       setDesc(description || "");
-      setImgName(name || "");
+      setImgName(`http://localhost:8765/upload/${name}` || "");
       setImgSize(size || "");
     });
   }, [id]);
@@ -55,10 +55,7 @@ const BlogEdit = () => {
 
                 <div className="form-group">
                   <div className="thumbnail">
-                    <img
-                      src={`http://localhost:8765/upload/${imgName}`}
-                      alt=""
-                    />
+                    <img src={imgName} alt="" />
                   </div>
                 </div>
 
@@ -105,7 +102,10 @@ const BlogEdit = () => {
                         <span className="data photo_id_box">{id}</span>
                       </p>
                       <p className="text">
-                        Filename: <span className="data">{imgName}</span>
+                        Filename:{" "}
+                        <span className="data">
+                          {imgName.match(/\w+\.\w+/gm)[0]}
+                        </span>
                       </p>
                       <p className="text">
                         File Size: <span className="data">{imgSize}</span>

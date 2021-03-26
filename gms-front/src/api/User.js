@@ -57,6 +57,7 @@ export default class User {
       method: "POST",
       body: formdata,
       redirect: "follow",
+      credentials: "include",
     };
 
     return fetch(
@@ -80,6 +81,7 @@ export default class User {
       method: "POST",
       body: formdata,
       redirect: "follow",
+      credentials: "include",
     };
 
     return fetch(
@@ -91,6 +93,7 @@ export default class User {
     var requestOptions = {
       method: "POST",
       redirect: "follow",
+      credentials: "include",
     };
 
     return fetch(

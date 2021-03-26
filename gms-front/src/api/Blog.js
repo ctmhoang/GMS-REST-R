@@ -29,6 +29,7 @@ export default class Blog {
     var requestOptions = {
       method: "POST",
       redirect: "follow",
+      credentials: "include",
     };
 
     return fetch(
@@ -46,6 +47,7 @@ export default class Blog {
       method: "POST",
       body: formdata,
       redirect: "follow",
+      credentials: "include",
     };
 
     return fetch(
@@ -62,6 +64,7 @@ export default class Blog {
       method: "POST",
       body: formdata,
       redirect: "follow",
+      credentials: "include",
     };
 
     return fetch(
@@ -83,6 +86,7 @@ export default class Blog {
       method: "POST",
       body: formdata,
       redirect: "follow",
+      credentials: "include",
     };
 
     return fetch(

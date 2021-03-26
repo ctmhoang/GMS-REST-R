@@ -30,6 +30,7 @@ export default class Comment {
     var requestOptions = {
       method: "POST",
       redirect: "follow",
+      credentials: "include",
     };
 
     return fetch(
