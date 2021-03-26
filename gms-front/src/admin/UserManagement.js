@@ -46,35 +46,37 @@ const UserManagement = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {users.map(({ id, usr, fst, lst }, idx) => (
-                    <tr key={idx}>
-                      <td>{id}</td>
+                  {users
+                    .filter(({ id }) => id != localStorage.getItem("id") || -1)
+                    .map(({ id, usr, fst, lst }, idx) => (
+                      <tr key={idx}>
+                        <td>{id}</td>
 
-                      <td>
-                        {usr}
-                        <div className="action_links">
-                          <button
-                            onClick={(e) => {
-                              e.preventDefault();
-                              del(id);
-                            }}
-                          >
-                            Delete
-                          </button>
-                          <Link
-                            className="btn"
-                            role="button"
-                            to={`/admin/users/edit/${id}`}
-                          >
-                            Edit
-                          </Link>
-                        </div>
-                      </td>
+                        <td>
+                          {usr}
+                          <div className="action_links">
+                            <button
+                              onClick={(e) => {
+                                e.preventDefault();
+                                del(id);
+                              }}
+                            >
+                              Delete
+                            </button>
+                            <Link
+                              className="btn"
+                              role="button"
+                              to={`/admin/users/edit/${id}`}
+                            >
+                              Edit
+                            </Link>
+                          </div>
+                        </td>
 
-                      <td>{fst}</td>
-                      <td>{lst}</td>
-                    </tr>
-                  ))}
+                        <td>{fst}</td>
+                        <td>{lst}</td>
+                      </tr>
+                    ))}
                 </tbody>
               </table>
             </div>

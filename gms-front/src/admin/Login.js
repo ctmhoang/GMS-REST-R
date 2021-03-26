@@ -23,6 +23,7 @@ const Login = () => {
               localStorage.setItem("isAuth", true);
               localStorage.setItem("userName", res.code);
               localStorage.setItem("message", "");
+              localStorage.setItem("id", res.id);
               nav("/admin");
             }
           });
