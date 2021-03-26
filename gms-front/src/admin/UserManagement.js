@@ -47,7 +47,7 @@ const UserManagement = () => {
                 </thead>
                 <tbody>
                   {users
-                    .filter(({ id }) => id != localStorage.getItem("id") || -1)
+                    .filter(({ id }) => id != +localStorage.getItem("id"))
                     .map(({ id, usr, fst, lst }, idx) => (
                       <tr key={idx}>
                         <td>{id}</td>
