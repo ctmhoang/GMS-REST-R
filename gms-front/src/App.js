@@ -11,6 +11,7 @@ const App = () => {
   return (
     <React.StrictMode>
       <BrowserRouter>
+        <NavBar />
         <Routes>
           <Route path="/" element={<SearchParams />} />
           <Route path="/details/:id" element={<Details />} />
@@ -20,5 +21,4 @@ const App = () => {
     </React.StrictMode>
   );
 };
-render(<NavBar />, document.querySelector("nav"));
 render(<App />, document.getElementById("root"));

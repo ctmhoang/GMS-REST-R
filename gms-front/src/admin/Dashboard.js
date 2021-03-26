@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import blog from "../api/Blog";
 import comment from "../api/Comment";
 import user from "../api/User";
@@ -37,7 +38,7 @@ const DashBoard = () => {
                       </div>
                     </div>
                   </div>
-                  <a href="photo.php">
+                  <Link to="/admin/blogs">
                     <div className="panel-footer">
                       <span className="pull-left">Total Photos in Gallery</span>
                       <span className="pull-right">
@@ -45,7 +46,7 @@ const DashBoard = () => {
                       </span>
                       <div className="clearfix"></div>
                     </div>
-                  </a>
+                  </Link>
                 </div>
               </div>
 
@@ -63,7 +64,7 @@ const DashBoard = () => {
                       </div>
                     </div>
                   </div>
-                  <a href="user.php">
+                  <Link to="/admin/users">
                     <div className="panel-footer">
                       <span className="pull-left">Total Users</span>
                       <span className="pull-right">
@@ -71,7 +72,7 @@ const DashBoard = () => {
                       </span>
                       <div className="clearfix"></div>
                     </div>
-                  </a>
+                  </Link>
                 </div>
               </div>
 
@@ -88,7 +89,7 @@ const DashBoard = () => {
                       </div>
                     </div>
                   </div>
-                  <a href="comment.php">
+                  <Link to="/admin/users">
                     <div className="panel-footer">
                       <span className="pull-left">Total Comments</span>
                       <span className="pull-right">
@@ -96,7 +97,7 @@ const DashBoard = () => {
                       </span>
                       <div className="clearfix"></div>
                     </div>
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>

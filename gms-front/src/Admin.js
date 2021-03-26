@@ -19,55 +19,46 @@ const Admin = () => {
       <PrivateRoute
         component={<DashBoard />}
         redirectTo="/admin/login"
-        isAuth={localStorage.getItem("isAuth")}
         path="dashboard"
       />
       <PrivateRoute
         component={<DashBoard />}
         redirectTo="/admin/login"
-        isAuth={localStorage.getItem("isAuth")}
         path="/"
       />
       <PrivateRoute
         component={<UserManagement />}
         redirectTo="/admin/login"
-        isAuth={localStorage.getItem("isAuth")}
         path="users"
       />
       <PrivateRoute
         component={<UserAdd />}
         redirectTo="/admin/login"
-        isAuth={localStorage.getItem("isAuth")}
         path="users/add"
       />
       <PrivateRoute
         component={<UserEdit />}
         redirectTo="/admin/login"
-        isAuth={localStorage.getItem("isAuth")}
         path="users/edit/:id"
       />
       <PrivateRoute
         component={<Upload />}
         redirectTo="/admin/login"
-        isAuth={localStorage.getItem("isAuth")}
         path="upload"
       />
       <PrivateRoute
         component={<BlogManagement />}
         redirectTo="/admin/login"
-        isAuth={localStorage.getItem("isAuth")}
         path="blogs"
       />
       <PrivateRoute
         component={<BlogEdit />}
         redirectTo="/admin/login"
-        isAuth={localStorage.getItem("isAuth")}
         path="blogs/edit/:id"
       />
       <PrivateRoute
         component={<CommentManagement />}
         redirectTo="/admin/login"
-        isAuth={localStorage.getItem("isAuth")}
         path="comments"
       />
     </Routes>
